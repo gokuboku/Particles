@@ -10,8 +10,8 @@ public class ParticleSimulation {
     private SimulationConfig config;
     private Random random;
     private static final double DT = 0.1; // Time step
-    private static final double DAMPING = 0.995; // Velocity damping (less damping)
-    private static final double MIN_DISTANCE = 5; // Prevent division by zero
+//    private static final double DAMPING = 0.995; // Promotes clumping, if used particles clump and make cool effects
+    private static final double MIN_DISTANCE = 5; // Math, used only to prevent division by 0
     private static final double FORCE_SCALE = 100.0; // Scale forces to keep particles moving
     private static final double MAX_VELOCITY = 100; // Maximum velocity cap
     private static final double frameTime = 0;
@@ -25,9 +25,11 @@ public class ParticleSimulation {
 
     private void initializeParticles() {
         for (int i = 0; i < config.numOfParticles; i++) {
+            // Create random starting coordinates for particles
             double x = random.nextDouble() * config.width;
             double y = random.nextDouble() * config.height;
-            // Increase initial velocities
+
+            // Give random velocities to
             double vx = (random.nextDouble() - 0.5) * 50;
             double vy = (random.nextDouble() - 0.5) * 50;
             // Random charge magnitude between 0.5 and 2.0
@@ -45,7 +47,7 @@ public class ParticleSimulation {
             gui.start();
         }
 
-        for (int cycle = 0; cycle < config.cycles; cycle++) {
+        for (int i = 0; i < config.cycles; i++) {
             computeForces();
             updatePositions();
 
@@ -86,7 +88,6 @@ public class ParticleSimulation {
 
     public void runDistributed() {
         // Placeholder for distributed implementation
-        // Would use RMI, sockets, or messaging framework
         System.out.println("Distributed mode not yet implemented");
         runParallel(); // Fall back to parallel for now
     }
@@ -212,8 +213,8 @@ public class ParticleSimulation {
             p.vy += p.fy * DT;
 
             // Reduce velocity to promote clumping
-            p.vx *= DAMPING;
-            p.vy *= DAMPING;
+//            p.vx *= DAMPING;
+//            p.vy *= DAMPING;
 
             // Limit velocity to MAX_VELOCITY
             double speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);

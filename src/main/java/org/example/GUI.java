@@ -43,18 +43,13 @@ public class GUI extends JFrame {
                 while (System.currentTimeMillis() - startTime < FRAME_TIME) {
 
                 }
-//                if (sleepTime > 0) {
-//                    try {
-//                        Thread.sleep(sleepTime);
-//                    } catch (InterruptedException e) {
-//                        Thread.currentThread().interrupt();
-//                    }
-//                }
             }
         });
         renderThread.start();
     }
 
+
+    // Method Used to stop GUI thread
     public void stop() {
         running = false;
         try {
@@ -64,6 +59,8 @@ public class GUI extends JFrame {
         }
     }
 
+
+    // Method only used to count how many cycles happen per second
     public void update() {
         long endTime = System.currentTimeMillis();
         fpsCounter++;
@@ -72,7 +69,6 @@ public class GUI extends JFrame {
             startTime = System.currentTimeMillis();
             fpsCounter = 0;
         }
-        // This method can be called to signal updates, but rendering is independent
     }
 
     class DrawPanel extends JPanel {
@@ -81,7 +77,7 @@ public class GUI extends JFrame {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
             // Draw background
-            g2.setColor(Color.DARK_GRAY);
+            g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, getWidth(), getHeight());
             // Draw particles
             synchronized (particles) {
