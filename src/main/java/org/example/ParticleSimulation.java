@@ -24,7 +24,7 @@ public class ParticleSimulation {
     }
 
     private void initializeParticles() {
-        for (int i = 0; i < config.numParticles; i++) {
+        for (int i = 0; i < config.numOfParticles; i++) {
             double x = random.nextDouble() * config.width;
             double y = random.nextDouble() * config.height;
             // Increase initial velocities
@@ -211,7 +211,9 @@ public class ParticleSimulation {
             p.vx += p.fx * DT;
             p.vy += p.fy * DT;
 
-            // Apply damping (less aggressive)
+            // Reduce velocity to promote clumping
+            p.vx *= DAMPING;
+            p.vy *= DAMPING;
 
             // Limit velocity to MAX_VELOCITY
             double speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);

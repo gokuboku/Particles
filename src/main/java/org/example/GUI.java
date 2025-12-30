@@ -15,7 +15,6 @@ public class GUI extends JFrame {
     private static int currentFps = 0;
     private static int fpsCounter = 0;
     private static long startTime = 0;
-    private static long endTime = 0;
 
     public GUI(SimulationConfig config, List<Particle> particles) {
         this.config = config;
@@ -66,7 +65,7 @@ public class GUI extends JFrame {
     }
 
     public void update() {
-        endTime = System.currentTimeMillis();
+        long endTime = System.currentTimeMillis();
         fpsCounter++;
         if(endTime - startTime >= 1000) {
             currentFps = fpsCounter;
